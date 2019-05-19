@@ -18,13 +18,13 @@ self.addEventListener('fetch', event => {
     // See: https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy#Cross-origin_data_storage_access
     // @ts-ignore Property 'request' does not exist on type 'Event'.ts
     const requestHost = new URL(event.request.url).host;
-    if (requestHost === location.host) {
-        // forward request
-        // @ts-ignore Property 'respondWith' does not exist on type 'Event'.ts,
-        // Property 'request' does not exist on type 'Event'.ts
-        event.respondWith(fetch(event.request, {
-            // omit cookie transmission
-            credentials: 'omit',
-        }));
-    }
+    if (requestHost !== location.host) return
+
+    // forward request
+    // @ts-ignore Property 'respondWith' does not exist on type 'Event'.ts,
+    // Property 'request' does not exist on type 'Event'.ts
+    event.respondWith(fetch(event.request, {
+        // omit cookie transmission
+        credentials: 'omit',
+    }));
 });

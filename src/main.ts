@@ -15,11 +15,9 @@ if (window.hasBrowserWarning) {
 
 if ((BrowserDetection.isIOS() || BrowserDetection.isSafari()) && 'serviceWorker' in navigator) {
     // Register service worker to strip cookie from requests
-    navigator.serviceWorker.register('/ServiceWorker.js', {
-        scope: '/',
-    }).then((reg) => {
+    navigator.serviceWorker.register('/ServiceWorker.js').then((reg) => {
         console.debug(`Service worker has been registered for scope: ${reg.scope}`);
-    }).catch((error) => {
+    }, (error) => {
         console.error(`Service worker installation failed`);
         throw error;
     });
