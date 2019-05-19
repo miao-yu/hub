@@ -13,7 +13,7 @@ if (window.hasBrowserWarning) {
     throw new Error('Exeution aborted due to browser warning');
 }
 
-if ((BrowserDetection.isIOS() || BrowserDetection.isSafari()) && 'serviceWorker' in navigator) {
+if (false && (BrowserDetection.isIOS() || BrowserDetection.isSafari()) && 'serviceWorker' in navigator) {
     // Register service worker to strip cookie from requests
     navigator.serviceWorker.register('/ServiceWorker.js').then((reg) => {
         console.debug(`Service worker has been registered for scope: ${reg.scope}`);
