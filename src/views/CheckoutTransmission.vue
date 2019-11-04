@@ -1,7 +1,15 @@
 <template>
     <div class="container pad-bottom">
         <SmallPage>
-            <StatusScreen :title="title" :status="status" :state="state" :lightBlue="true"/>
+            <StatusScreen
+                :title="title"
+                :status="status"
+                :state="state"
+                :message="warningMessage"
+                :mainAction="warningAction"
+                @main-action="reloadPage"
+                :lightBlue="true"
+            />
             <Network ref="network" :visible="false"/>
         </SmallPage>
     </div>
@@ -23,6 +31,10 @@ export default class CheckoutTransmission extends Vue {
 
     private isTxSent: boolean = false;
     private status: string = 'Connecting to network...';
+
+    private txSendingFailed: boolean = false;
+    private warningMessage: string = 'Your payment could not be sent to the network. Please reload the page to retry.';
+    private warningAction: string = 'Reload page';
 
     private created() {
         const $subtitle = document.querySelector('.logo .logo-subtitle')!;
@@ -46,15 +58,29 @@ export default class CheckoutTransmission extends Vue {
         network.$on(Network.Events.CONSENSUS_SYNCING, () => this.status = 'Syncing consensus...');
         network.$on(Network.Events.CONSENSUS_ESTABLISHED, () => this.status = 'Sending transaction...');
         network.$on(Network.Events.TRANSACTION_PENDING, () => this.status = 'Awaiting receipt confirmation...');
+
+        // Prepare tx sending timeout
+        network.$once(Network.Events.CONSENSUS_ESTABLISHED, () => {
+            // Fail when transaction not relayed after 8 seconds
+            setTimeout(() => { this.txSendingFailed = true; }, 8000);
+        });
+    }
+
+    private reloadPage() {
+        if (this.isTxSent) return;
+        location.reload();
     }
 
     private get state(): StatusScreen.State {
-        return !this.isTxSent ? StatusScreen.State.LOADING : StatusScreen.State.SUCCESS;
+        if (this.isTxSent) return StatusScreen.State.SUCCESS;
+        if (this.txSendingFailed) return StatusScreen.State.WARNING;
+        return StatusScreen.State.LOADING;
     }
 
     private get title(): string {
-        return !this.isTxSent ? 'Processing your payment' : 'Payment successful.';
+        if (this.isTxSent) return 'Payment successful.';
+        if (this.txSendingFailed) return 'Could not send payment';
+        return 'Processing your payment';
     }
 }
 </script>
-
