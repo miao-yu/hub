@@ -83,6 +83,43 @@ export default class CheckoutServerApi {
     private static _getStatePromises = new Map<Currency, Promise<GetStateResponse>>();
 
     private static async _fetchData(endPoint: string, requestData: URLSearchParams, csrfToken: string): Promise<any> {
+        const now = Date.now();
+        return [
+            {
+                currency: Currency.BTC,
+                type: PaymentType.DIRECT,
+                amount: '.00029e8',
+                expires: + new Date(now + 15 * 60000), // 15 minutes
+                protocolSpecific: {
+                    feePerByte: 2, // 2 sat per byte
+                    recipient: '17w6ar5SqXFGr786WjGHB8xyu48eujHaBe', // Unicef
+                },
+                time: now,
+            },
+            {
+                currency: Currency.NIM,
+                type: PaymentType.DIRECT,
+                amount: '20e5',
+                expires: + new Date(now + 15 * 60000), // 15 minutes
+                protocolSpecific: {
+                    fee: 50000,
+                    recipient: 'NQ35 SB3E B8XA ESYE R574 SJA4 EEFT X0VQ Q5T1',
+                },
+                time: now,
+            },
+            {
+                currency: Currency.ETH,
+                type: PaymentType.DIRECT,
+                amount: '.0091e18',
+                expires: + new Date(now + 15 * 60000), // 15 minutes
+                protocolSpecific: {
+                    gasLimit: 21000,
+                    gasPrice: '10000',
+                    recipient: '0xa4725d6477644286b354288b51122a808389be83', // the water project
+                },
+                time: now,
+            },
+        ].find((entry) => entry.currency === requestData.get('currency'));
         requestData.append('csrf', csrfToken);
         const headers = new Headers();
         const init: RequestInit = {

@@ -274,7 +274,7 @@ class Demo {
                 version: 2,
                 appName: 'Accounts Demos',
                 shopLogoUrl: `${location.origin}/nimiq.png`,
-                callbackUrl: `${location.origin}/callback.html`,
+                callbackUrl: `${location.origin}/callback.php`,
                 csrf: 'dummy-csrf-token',
                 time: now,
                 fiatCurrency: 'EUR',
@@ -297,6 +297,7 @@ class Demo {
                         expires: + new Date(now + 15 * 60000), // 15 minutes
                         protocolSpecific: {
                             fee: 50000,
+                            recipient: 'NQ35 SB3E B8XA ESYE R574 SJA4 EEFT X0VQ Q5T1',
                             extraData: 'Test MultiCheckout',
                         },
                     },
