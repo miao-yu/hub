@@ -22,7 +22,7 @@ export default class CheckoutTransmission extends Vue {
     @State private keyguardResult!: KeyguardClient.SignTransactionResult;
 
     private isTxSent: boolean = false;
-    private status: string = 'Connecting to network...';
+    private status: string = this.$t('Connecting to network...') as string;
 
     private created() {
         const $subtitle = document.querySelector('.logo .logo-subtitle')!;
@@ -42,10 +42,14 @@ export default class CheckoutTransmission extends Vue {
 
     private addConsensusListeners() {
         const network = (this.$refs.network as Network);
-        network.$on(Network.Events.API_READY, () => this.status = 'Contacting seed nodes...');
-        network.$on(Network.Events.CONSENSUS_SYNCING, () => this.status = 'Syncing consensus...');
-        network.$on(Network.Events.CONSENSUS_ESTABLISHED, () => this.status = 'Sending transaction...');
-        network.$on(Network.Events.TRANSACTION_PENDING, () => this.status = 'Awaiting receipt confirmation...');
+        network.$on(Network.Events.API_READY, () =>
+            this.status = this.$t('Contacting seed nodes...') as string);
+        network.$on(Network.Events.CONSENSUS_SYNCING, () =>
+            this.status = this.$t('Syncing consensus...') as string);
+        network.$on(Network.Events.CONSENSUS_ESTABLISHED, () =>
+            this.status = this.$t('Sending transaction...') as string);
+        network.$on(Network.Events.TRANSACTION_PENDING, () =>
+            this.status = this.$t('Awaiting receipt confirmation...') as string);
     }
 
     private get state(): StatusScreen.State {
@@ -53,7 +57,9 @@ export default class CheckoutTransmission extends Vue {
     }
 
     private get title(): string {
-        return !this.isTxSent ? 'Processing your payment' : 'Payment successful.';
+        return !this.isTxSent
+            ? this.$t('Processing your payment') as string
+            : this.$t('Payment successful.') as string;
     }
 }
 </script>

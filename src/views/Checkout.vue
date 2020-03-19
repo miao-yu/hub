@@ -50,7 +50,7 @@
 
         <button class="global-close nq-button-s" @click="close">
             <ArrowLeftSmallIcon/>
-            Cancel <span>Payment</span>
+            {{ $t('Cancel') }} <span>{{ $t('Payment') }}</span>
         </button>
         <div class="spacer"></div>
 
@@ -60,9 +60,8 @@
                 class="disclaimer"
                 @close="_closeDisclaimerOverlay"
             >
-                <strong>Disclaimer</strong>
-                This Nimiq interface is non-custodial and solely used to bridge the customer with the merchant directly
-                (P2P). Payment and order fulfillment are sole responsibility of the customer and merchant respectively.
+                <strong>{{ $t('Disclaimer') }}</strong>
+                {{ $t('This Nimiq interface is non-custodial and solely used to bridge the customer with the merchant directly (P2P). Payment and order fulfillment are sole responsibility of the customer and merchant respectively.') }}
             </component>
         </transition>
     </div>

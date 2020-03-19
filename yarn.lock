@@ -9802,9 +9802,16 @@ webpack-dev-server@^3.1.14:
     webpack-log "^2.0.0"
     yargs "12.0.2"
 
-"webpack-i18n-tools@link:../../../../Documents/GitHub/webpack-i18n-tools":
-  version "0.0.0"
-  uid ""
+"webpack-i18n-tools@https://github.com/Yukiioz/webpack-i18n-tools.git#master":
+  version "0.0.1"
+  resolved "https://github.com/Yukiioz/webpack-i18n-tools.git#f6c264c80f1cf5add2943edb6a6bc02b7ada1a8e"
+  dependencies:
+    gettext-extractor "^3.5.2"
+    glob "^7.1.6"
+    loader-utils "^1.2.3"
+    parse5 "^4.*.*"
+    po2json "^0.4.5"
+    queue "^6.0.1"
 
 webpack-log@^2.0.0:
   version "2.0.0"

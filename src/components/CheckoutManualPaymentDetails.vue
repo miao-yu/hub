@@ -19,11 +19,11 @@
             :endTime="paymentOptions.expires"
         />
         <PageHeader backArrow @back="$emit(constructor.Events.CLOSE)">
-            Send your transaction
+            {{ $t('Send your transaction') }}
         </PageHeader>
         <PageBody>
             <p class="nq-notice warning">
-                Don’t close this window until confirmation. <br />
+                {{ $t('Don’t close this window until confirmation.') }} <br />
                 {{ paymentOptions.feeString }}
             </p>
             <CopyableField
@@ -44,7 +44,6 @@ import {
     PageHeader,
     PageBody,
     PaymentInfoLine,
-    UniversalAmount,
 } from '@nimiq/vue-components';
 import { State as RpcState } from '@nimiq/rpc';
 import { Static } from '../lib/StaticStore';
@@ -57,7 +56,6 @@ import CheckoutServerApi from '../lib/CheckoutServerApi';
     PageHeader,
     PageBody,
     PaymentInfoLine,
-    UniversalAmount,
 }})
 class CheckoutManualPaymentDetails<
     Parsed extends AvailableParsedPaymentOptions,

@@ -44,7 +44,7 @@
                         :startTime="request.time"
                         :endTime="paymentOptions.expires" />
                     <h1 class="nq-h1" v-if="this.selected">
-                        Send your transaction
+                        {{ $t('Send your transaction') }}
                     </h1>
                     <PageBody v-if="!this.selected">
                         <Account layout="column"
@@ -53,19 +53,19 @@
                         <div class="amounts">
                             <Amount class="crypto nq-light-blue"
                                 :currency="paymentOptions.currency"
-                                :totalDecimals="paymentOptions.decimals"
+                                :currencyDecimals="paymentOptions.decimals"
                                 :minDecimals="0"
                                 :maxDecimals="paymentOptions.decimals < 8 ? paymentOptions.decimals : 8"
                                 :amount="paymentOptions.amount"
                             />
                             <div v-if="paymentOptions.fee !== 0" class="fee">
-                                + network fee
+                                {{ $t('+ network fee') }}
                             </div>
                         </div>
                     </PageBody>
                     <PageBody v-else>
                         <p class="nq-notice warning">
-                            Don’t close this window until confirmation. <br />
+                            {{ $t('Don’t close this window until confirmation.') }} <br />
                             {{ paymentOptions.feeString }}
                         </p>
                         <QrCode
@@ -85,20 +85,20 @@
                             :href="paymentLink"
                         >
                             <template v-if="appNotFound">
-                                <span>No App found</span>
-                                <span>Please send the transaction manually</span>
+                                <span>{{ $t('No App found') }}</span>
+                                <span>{{ $t('Please send the transaction manually') }}</span>
                             </template>
                             <template v-else>
-                                Open Wallet App
+                                {{ $t('Open Wallet App') }}
                             </template>
                         </button>
                         <p class="nq-text-s" @click="manualPaymentDetailsOpen = true" >
-                            Enter manually<CaretRightSmallIcon/>
+                            {{ $t('Enter manually') }}<CaretRightSmallIcon/>
                         </p>
                     </PageFooter>
                     <PageFooter v-else>
                         <button class="nq-button light-blue" @click="selectCurrency">
-                            Pay with {{currencyFullName}}
+                            {{ $t('Pay with {currencyFullName}', { currencyFullName }) }}
                         </button>
                     </PageFooter>
                 </SmallPage>
